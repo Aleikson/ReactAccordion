@@ -6,27 +6,30 @@ export const accordion = () => {
       header: "HTML",
       content:
         "(HyperText Markup Language) is the most basic building block of the Web. It defines the meaning and structure of web content. ",
-      isOpen: false,
+      isOpen: false, 
+      imageSrc: "./images/HTML5.png"
     },
     {
       header: "CSS",
       content:
         "Cascading Style Sheets is a style sheet language used for describing the presentation of a document written in a markup language such as HTML or XML",
       isOpen: false,
+      imageSrc: "./images/CSS3.png"
     },
     {
       header: "JS",
       content:
         "JavaScript is a lightweight, interpreted, or just-in-time compiled programming language with first-class functions.",
       isOpen: false,
+      imageSrc: "./images/Javascript.png"
     },
   ]);
 
+  const [activeIndex, setActiveIndex] = useState(-1);
+
   const handleOpen = (index) => {
-    setAccordions(
-      accordions.map((accordion, i) =>
-        i === index ? { ...accordion, isOpen: !accordion.isOpen } : accordion
-      )
+    setActiveIndex((prevActiveIndex) =>
+      prevActiveIndex === index ? -1 : index
     );
   };
 
@@ -36,14 +39,16 @@ export const accordion = () => {
         <div key={index} className="accordion">
           <div className="accordion-header" onClick={() => handleOpen(index)}>
             <div>{accordion.header}</div>
-            <div>{accordion.isOpen ? "-" : "+"}</div>
+            <div>{activeIndex === index ? "-" : "+"}</div>
           </div>
-          {accordion.isOpen && (
-            <div className="accordion-body">{accordion.content}</div>
+          {activeIndex === index && (
+            <div className="accordion-body">
+              {accordion.content}
+              <img className="imagem-acordion" src={accordion.imageSrc} />
+            </div>
           )}
         </div>
       ))}
     </div>
   );
 };
-
